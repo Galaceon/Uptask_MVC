@@ -27,7 +27,6 @@ class LoginController {
 
 
     public static function crear(Router $router) {
-        echo "Desde Crear";
 
         if($_SERVER['REQUEST_METHOD'] === 'POST') {
 
@@ -35,7 +34,7 @@ class LoginController {
 
         // Render a la vista
         $router->render('auth/crear', [
-            'titulo' => 'Crear Cuenta'
+            
         ]);
     }
 
