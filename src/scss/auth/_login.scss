@@ -2,7 +2,7 @@
 @use 'base/variables' as v;
 @use 'sass:color';
 
-.crear {
+.login {
     
     .uptask {
         background: linear-gradient(to right, v.$cyan 0%, color.scale(v.$morado, $lightness: 60%) 100%);
@@ -14,5 +14,9 @@
         @include m.tablet {
             font-size: 10rem;
         }
+    }
+
+    input[type="submit"] {
+        @include m.boton(v.$cyan, v.$blanco)
     }
 }
