@@ -1,0 +1,26 @@
+@use 'base/variables' as v;
+@use 'base/mixins' as m;
+@use 'sass:color';
+
+.formulario {
+    margin-top: 5rem;
+
+    .campo {
+        display: flex;
+        align-items: center;
+        margin-bottom: 2rem;
+
+        label {
+            // Para que las etiquetas tengan un ancho fijo
+            flex: 0 0 10rem;
+        }
+        input {
+            flex: 1; // Para que ocupe todo el tamaño sobrante
+            padding: 1rem;
+            border: none;
+            background-color: color.scale(v.$gris, $lightness: 70%);
+        }
+    }
+
+
+}
