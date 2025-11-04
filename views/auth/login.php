@@ -19,7 +19,7 @@
             <input type="submit" class="boton" value="Iniciar Sesión">
         </form>
 
-        <div class="acctiones">
+        <div class="acciones">
             <a href="/crear">Crear Cuenta</a>
             <a href="/olvide">Recuperar Cuenta</a>
         </div>
