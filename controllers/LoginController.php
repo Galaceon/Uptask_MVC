@@ -34,7 +34,7 @@ class LoginController {
 
         // Render a la vista
         $router->render('auth/crear', [
-            
+            'titulo' => 'Crear Cuenta'
         ]);
     }
 
@@ -47,7 +47,7 @@ class LoginController {
         }
 
         $router->render('auth/olvide', [
-            'titulo' => 'Olvide mi Password'
+            'titulo' => 'Recuperar Cuenta'
         ]);
     }
 
@@ -59,13 +59,16 @@ class LoginController {
         }
 
         $router->render('auth/reestablecer', [
-            'titulo' => 'Reestablecer mi Password'
+            'titulo' => 'Reestablecer Password'
         ]);
     }
 
 
-    public static function mensaje() {
-        echo "Desde mensaje";
+    public static function mensaje(Router $router) {
+        
+        $router->render('auth/mensaje', [
+            'titulo' => 'Cuenta Creada Exitosamente'
+        ]);
     }
 
 
