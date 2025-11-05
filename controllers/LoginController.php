@@ -39,12 +39,16 @@ class LoginController {
     }
 
 
-    public static function olvide() {
+    public static function olvide(Router $router) {
         echo "Desde Olvide";
 
         if($_SERVER['REQUEST_METHOD'] === 'POST') {
 
         }
+
+        $router->render('auth/olvide', [
+
+        ]);
     }
 
 

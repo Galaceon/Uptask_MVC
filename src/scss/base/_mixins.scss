@@ -1,4 +1,5 @@
 @use 'base/variables' as v;
+@use 'sass:color';
 
 /** Media Queries **/
 @mixin telefono {
@@ -35,7 +36,7 @@
         width: auto;
     }
     &:hover {
-        background-color: darken( $bgColor, 10% );
+        background-color: color.scale($bgColor, $lightness: -20%);
         cursor: pointer;
     }
 }
@@ -44,4 +45,16 @@
     display: grid;
     gap: $espaciado;
     grid-template-columns: repeat($columnas, 1fr);
+}
+
+@mixin textoDegradado($color) {
+        background: linear-gradient(to right, $color 0%, color.scale($color, $lightness: 60%) 100%);
+        color: transparent;
+        background-clip: text;
+        text-align: center;
+        font-size: 7rem;
+
+        @include tablet {
+            font-size: 10rem;
+        }
 }
