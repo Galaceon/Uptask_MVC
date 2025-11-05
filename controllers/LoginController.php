@@ -40,7 +40,6 @@ class LoginController {
 
 
     public static function olvide(Router $router) {
-        echo "Desde Olvide";
 
         if($_SERVER['REQUEST_METHOD'] === 'POST') {
 
@@ -72,7 +71,11 @@ class LoginController {
     }
 
 
-    public static function confirmar() {
-        echo "Desde confirmar";
+    public static function confirmar(Router $router) {
+        
+
+        $router->render('auth/confirmar', [
+            'titulo' => 'Confirma tu Cuenta'
+        ]);
     }
 }
