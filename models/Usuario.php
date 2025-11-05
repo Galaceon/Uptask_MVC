@@ -15,4 +15,18 @@ class Usuario extends ActiveRecord {
         $this->token = $args['token'] ?? '';
         $this->confirmado = $args['confirmado'] ?? '';
     }
+
+    // Validación para cuenta nuevas
+    public function validarNuevaCuenta() {
+        if(!$this->nombre) {
+            self::$alertas['error'][] = 'El nombre del Usuario es obligatorio';
+        }
+        if(!$this->email) {
+            self::$alertas['error'][] = 'El email del Usuario es obligatorio';
+        }
+        
+
+
+        return self::$alertas;
+    }
 }
