@@ -47,17 +47,20 @@ class LoginController {
         }
 
         $router->render('auth/olvide', [
-
+            'titulo' => 'Olvide mi Password'
         ]);
     }
 
 
-    public static function reestablecer() {
-        echo "Desde resta";
+    public static function reestablecer(Router $router) {
 
         if($_SERVER['REQUEST_METHOD'] === 'POST') {
 
         }
+
+        $router->render('auth/reestablecer', [
+            'titulo' => 'Reestablecer mi Password'
+        ]);
     }
 
 
