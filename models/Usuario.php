@@ -47,4 +47,15 @@ class Usuario extends ActiveRecord {
     public function crearToken() {
         $this->token = uniqid();
     }
+
+    // Valida un Email
+    public function validarEmail() {
+        if(!$this->email) {
+            self::$alertas['error'][] = 'El email es Obligatorio';
+        }
+        if(filter_var($this->email, FILTER_VALIDATE_EMAIL)) {
+            self::$alertas['error'][] = 'Email no válido';
+        }
+        return self::$alertas;
+    }
 }
