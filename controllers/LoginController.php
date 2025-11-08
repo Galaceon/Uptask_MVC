@@ -131,6 +131,7 @@ class LoginController {
         }
 
         if($_SERVER['REQUEST_METHOD'] === 'POST') {
+            
             // Añadir el nuevo Password
             $usuario->sincronizar($_POST);
 
@@ -138,9 +139,22 @@ class LoginController {
             $alertas = $usuario->validarPassword();
 
             if(empty($alertas)) {
-                // Hashear el unevo Password
+                // Hashear el nuevo Password
+                $usuario->hashPassword();
+                
+                // Eliminar password2
+                unset($usuario->password2);
 
-                debuguear($usuario);
+                // Eliminar token
+                $usuario->token = null;
+
+                // Guardar Usuario
+                $resultado = $usuario->guardar();
+
+                // Redireccionar
+                if($resultado) {
+                    header('Location: /');
+                }
             }
         }
 
