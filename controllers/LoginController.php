@@ -88,8 +88,20 @@ class LoginController {
                 $usuario = Usuario::where('email', $usuario->email);
 
                 if($usuario && $usuario->confirmado === "1") {
-                    // Encontre al usuario
+                    // Generar un nuevo Token
+                    $usuario->crearToken();
+                    unset($usuario->password2);
 
+                    // Actualizar el usuario
+                    $usuario->guardar();
+
+                    // Enviar email
+                    $email = new Email($usuario->email, $usuario->nombre, $usuario->token);
+                    $email->enviarInstrucciones();
+
+                    // Imprimir la alerta
+                    Usuario::setAlerta('exito', 'Te hemos enviado un email para reestablecer tu cuenta');
+                    $alertas = Usuario::getAlertas();
                 } else {
                     // No se encontro ningun usuario
                     Usuario::setAlerta('error', 'El usuario no existe o no esta confirmado');
@@ -107,12 +119,15 @@ class LoginController {
 
     public static function reestablecer(Router $router) {
 
-        if($_SERVER['REQUEST_METHOD'] === 'POST') {
+        
 
+        if($_SERVER['REQUEST_METHOD'] === 'POST') {
+            
         }
 
         $router->render('auth/reestablecer', [
-            'titulo' => 'Reestablecer Password'
+            'titulo' => 'Reestablecer Password',
+            'alertas' => $alertas
         ]);
     }
 
