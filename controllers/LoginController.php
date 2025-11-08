@@ -82,6 +82,20 @@ class LoginController {
         if($_SERVER['REQUEST_METHOD'] === 'POST') {
             $usuario = new Usuario($_POST);
             $alertas = $usuario->validarEmail();
+
+            if(empty($alertas)) {
+                // Buscar el usuario
+                $usuario = Usuario::where('email', $usuario->email);
+
+                if($usuario && $usuario->confirmado === "1") {
+                    // Encontre al usuario
+
+                } else {
+                    // No se encontro ningun usuario
+                    Usuario::setAlerta('error', 'El usuario no existe o no esta confirmado');
+                    $alertas = Usuario::getAlertas();
+                }
+            }
         }
 
         $router->render('auth/olvide', [
