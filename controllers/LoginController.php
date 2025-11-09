@@ -49,7 +49,7 @@ class LoginController {
 
 
     public static function logout() {
-
+        echo 'desde cerrar sesion';
         if($_SERVER['REQUEST_METHOD'] === 'POST') {
             
         }
