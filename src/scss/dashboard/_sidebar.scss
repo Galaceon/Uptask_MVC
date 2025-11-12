@@ -26,8 +26,9 @@
             font-size: 1.6rem;
             text-transform: uppercase;
 
-            &:hover {
-              background-color: color.scale(v.$indigo, $lightness: -15%);
+            &:hover,
+            &.activo {
+              background-color: color.scale(v.$indigo, $lightness: -20%);
               transition: background-color .3s ease;
             }
 
@@ -53,10 +54,13 @@
                  transition: width 0.3s ease;
             }
 
-            &:hover::before {
+            &:hover::before,
+            &.activo::before {
               width: .7rem;
             }
-            &:hover::after {
+
+            &:hover::after,
+            &.activo::after {
               width: 100%;
             }
         }
