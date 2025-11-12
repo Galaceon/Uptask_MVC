@@ -1,5 +1,6 @@
 @use 'base/variables' as v;
 @use 'base/mixins' as m;
+@use 'sass:color';
 
 
 
@@ -25,12 +26,18 @@
             font-size: 1.6rem;
             text-transform: uppercase;
 
+            &:hover {
+              background-color: color.scale(v.$indigo, $lightness: -15%);
+              transition: background-color .3s ease;
+            }
+
             &::before {
                  content: "";
                  position: absolute;
                  left: 0;
+                 bottom: 0;
                  width: 0;
-                 height: 80%;
+                 height: 100%;
                  background-color: v.$blanco;
                  transition: width 0.3s ease;
             }
@@ -47,7 +54,7 @@
             }
 
             &:hover::before {
-              width: .8rem;
+              width: .7rem;
             }
             &:hover::after {
               width: 100%;
