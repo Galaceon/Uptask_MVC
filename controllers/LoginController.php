@@ -49,10 +49,9 @@ class LoginController {
 
 
     public static function logout() {
-        echo 'desde cerrar sesion';
-        if($_SERVER['REQUEST_METHOD'] === 'POST') {
-            
-        }
+        session_start();
+        $_SESSION = [];
+        header('Location: /');
     }
 
 
