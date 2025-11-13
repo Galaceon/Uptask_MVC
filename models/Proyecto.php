@@ -1,6 +1,6 @@
 <?php 
 
-namespace Proyecto;
+namespace Model;
 
 use Model\ActiveRecord;
 
