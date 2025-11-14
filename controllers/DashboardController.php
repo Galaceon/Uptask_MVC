@@ -9,11 +9,14 @@ class DashboardController {
     public static function index(Router $router) {
         session_start();
         isAuth();
-        $alertas = [];
+
+        $id = $_SESSION['id'];
+
+        $proyectos = Proyecto::belongsTo('propietarioId', $id);
 
         $router->render('dashboard/index', [
             'titulo' => 'Proyectos',
-            'alertas' => $alertas
+            'proyectos' => $proyectos
         ]);
     }
 
@@ -54,7 +57,6 @@ class DashboardController {
     public static function proyecto(Router $router) {
         session_start();
         isAuth();
-        $alertas = [];
 
         $url = $_GET['url'];
 
