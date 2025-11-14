@@ -15,20 +15,10 @@
 
     .contenido {
         margin: 2rem;
-        text-align: center;
 
         .nombre-pagina {
             font-size: 3.5rem;
             text-align: center;
-        }
-
-        .crear-proyecto {
-            @include m.boton(v.$indigo, v.$blanco);
-            display: inline;
-            padding: 1rem;
-            text-transform: uppercase;
-            font-weight: bold;
-            font-size: 1.4rem;
         }
     }
 

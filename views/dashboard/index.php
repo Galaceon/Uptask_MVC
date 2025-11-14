@@ -2,7 +2,9 @@
 
     <?php if(count($proyectos) === 0) { ?>
         <p class="no-proyectos">No hay Proyectos aún</p>
-        <a href="/crear-proyecto" class="crear-proyecto">Crea tu primer Proyecto</a>
+        <div class="crear-proyecto-boton">
+            <a href="/crear-proyecto" class="crear-proyecto">Crea tu primer Proyecto</a>
+        </div>
     <?php } else { ?>
         <ul class="listado-proyectos">
             <?php foreach($proyectos as $proyecto) { ?>
