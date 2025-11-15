@@ -4,6 +4,22 @@
     nuevaTareaBtn.addEventListener('click', mostrarFormulario);
 
     function mostrarFormulario() {
-        console.log('mostrando...');
+        const modal = document.createElement('DIV');
+        modal.classList.add('modal');
+        modal.innerHTML = `
+            <form class="formulario nueva-tarea">
+                <legend>Añade una nueva tarea</legend>
+                <div class="campo">
+                    <label>Tarea</label>
+                    <input type="text" name="tarea" placeholder="Añadir Tarea al Proyecto Actual" id="tarea"/>
+                </div>
+                <div className="opciones">
+                    <input type="submit" class="submit-nueva-tarea" value="Añadir Tarea"/>
+                    <button type="button" class="cerrar-modal">Cancelar</button>
+                </div>
+            </form>
+        `;
+
+        document.querySelector('body').appendChild(modal);
     }
 })();
