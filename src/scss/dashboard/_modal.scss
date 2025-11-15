@@ -1,5 +1,6 @@
 @use 'base/mixins' as m;
 @use 'base/variables' as v;
+@use 'sass:color';
 
 .modal {
     position: absolute;
@@ -7,19 +8,64 @@
     inset: 0;
 
     .formulario {
-        background-color: v.$blanco;
+        background-color: v.$indigo;
+        color: v.$blanco;
         max-width: 60rem;
         padding: 2rem;
         margin: 0 auto;
         position: relative;
         top: -20rem;
-        opacity: 0%;
+        opacity: 0;
         transition: all .4s ease-in;
-        
+
+        display: flex;
+        flex-direction: column;
+        justify-items: center;
+        align-items: center;
 
         &.active {
             top: 40%;
-            opacity: 100%;
+            opacity: 1;
+        }
+
+        legend {
+            font-weight: bold;
+            font-size: 2rem;
+            text-transform: uppercase;
+            padding-bottom: 1.8rem;
+        }
+
+
+
+        .campo {
+            width: 100%;
+            padding: 1rem 0;
+
+            .tarea-label {
+                max-width: 15%;
+                font-size: 1.8rem;
+            }
+            .tarea {
+                background-color: color.scale(v.$indigo, $lightness: -20%);
+                color: v.$blanco;
+
+            }
+        }
+
+        .opciones {
+            width: 100%;
+            display: flex;
+            justify-content: space-between;
+
+            .submit-nueva-tarea {
+                @include m.boton(v.$verde, v.$blanco);
+                padding: 1rem
+            }
+
+            .cerrar-modal {
+                @include m.boton(color.scale(v.$naranja, $lightness: -20%), v.$blanco);
+                padding: 1rem
+            }
         }
     }
 }

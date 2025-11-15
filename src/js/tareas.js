@@ -11,10 +11,10 @@
             <form class="formulario nueva-tarea">
                 <legend>Añade una nueva tarea</legend>
                 <div class="campo">
-                    <label>Tarea</label>
-                    <input type="text" name="tarea" placeholder="Añadir Tarea al Proyecto Actual" id="tarea"/>
+                    <label for"tarea" class="tarea-label">Tarea</label>
+                    <input class="tarea" type="text" name="tarea" placeholder="Añadir Tarea al Proyecto Actual" id="tarea"/>
                 </div>
-                <div className="opciones">
+                <div class="opciones">
                     <input type="submit" class="submit-nueva-tarea" value="Añadir Tarea"/>
                     <button type="button" class="cerrar-modal">Cancelar</button>
                 </div>
@@ -26,7 +26,7 @@
         setTimeout(() => {
             const formulario = document.querySelector(".formulario");
             formulario.classList.add('active')
-        }, 100)
+        }, 0)
 
     }
 })();
