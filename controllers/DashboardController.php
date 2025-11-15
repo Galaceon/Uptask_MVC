@@ -7,11 +7,12 @@ use MVC\Router;
 
 class DashboardController {
     public static function index(Router $router) {
+        // Iniciar sesión y validar el usuario
         session_start();
         isAuth();
 
+        // Obtener los proyectos del usuario autenticado
         $id = $_SESSION['id'];
-
         $proyectos = Proyecto::belongsTo('propietarioId', $id);
 
         $router->render('dashboard/index', [
@@ -22,11 +23,16 @@ class DashboardController {
 
 
     public static function crear_proyecto(Router $router) {
+        // Iniciar sesión y validar el usuario
         session_start();
         isAuth();
+
+        // Necesitamos $alertas, ya que la vista las utiliza al mostrar el formulario
         $alertas = [];
 
+
         if($_SERVER['REQUEST_METHOD'] === 'POST') {
+            // Crear una nueva instancia de Proyecto
             $proyecto = new Proyecto($_POST);
 
             // validación
@@ -55,11 +61,14 @@ class DashboardController {
     }
 
     public static function proyecto(Router $router) {
+        // Iniciar sesión y validar el usuario
         session_start();
         isAuth();
 
+        // Validar la URL por GET para obtener el proyecto actual
         $url = $_GET['url'];
 
+        // Redireccionar si no hay proyecto
         if(!$url) header('Location: /dashboard');
 
         // Revisar que el visitante de un proyecto sea quien lo creó
@@ -74,6 +83,7 @@ class DashboardController {
     }
 
     public static function perfil(Router $router) {
+        // Iniciar sesión y validar el usuario
         session_start();
         isAuth();
 

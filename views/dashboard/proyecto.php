@@ -8,6 +8,6 @@
 
 <?php include_once __DIR__ . '/footer-dashboard.php'; ?>
 
-<?php 
+<?php // Añadir el script de tareas únicamente en esta vista 
     $script = '<script src="build/js/tareas.js"></script>'
 ?>

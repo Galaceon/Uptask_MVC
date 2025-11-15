@@ -3,6 +3,7 @@
     const nuevaTareaBtn = document.querySelector('#agregar-tarea');
     nuevaTareaBtn.addEventListener('click', mostrarFormulario);
 
+    // Función para mostrar el formulario modal
     function mostrarFormulario() {
         const modal = document.createElement('DIV');
         modal.classList.add('modal');
