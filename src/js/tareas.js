@@ -22,5 +22,11 @@
         `;
 
         document.querySelector('body').appendChild(modal);
+
+        setTimeout(() => {
+            const formulario = document.querySelector(".formulario");
+            formulario.classList.add('active')
+        }, 100)
+
     }
 })();

@@ -1,0 +1,25 @@
+@use 'base/mixins' as m;
+@use 'base/variables' as v;
+
+.modal {
+    position: absolute;
+    background-color: rgba(0, 0, 0, .8);
+    inset: 0;
+
+    .formulario {
+        background-color: v.$blanco;
+        max-width: 60rem;
+        padding: 2rem;
+        margin: 0 auto;
+        position: relative;
+        top: -20rem;
+        opacity: 0%;
+        transition: all .4s ease-in;
+        
+
+        &.active {
+            top: 40%;
+            opacity: 100%;
+        }
+    }
+}
