@@ -53,10 +53,18 @@
 
         if(tarea === '') {
             // Mostrar una alerta de error
-
+            mostrarAlerta('El nombre de la tarea es obligatorio', 'error', document.querySelector('.formulario legend'));
             return;
-        } 
+        }
+    }
 
+    function mostrarAlerta(mensaje, tipo, referencia) {
+        const alerta = document.createElement('DIV');
+        alerta.classList.add('alerta', tipo);
+        alerta.textContent = mensaje;
+
+        referencia.parentElement.insertBefore(alerta, referencia.nextElementSibling);
+        
     }
 
 })();
