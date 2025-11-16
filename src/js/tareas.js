@@ -33,8 +33,6 @@
         modal.addEventListener('click', function(e) {
             e.preventDefault();
 
-            
-
             if(e.target.classList.contains('cerrar-modal')) {
                 const formulario = document.querySelector(".formulario");
                 formulario.classList.add('cerrar');
@@ -43,6 +41,22 @@
                     modal.remove();
                 }, 350)
             }
+
+            if(e.target.classList.contains('submit-nueva-tarea')) {
+                submitFormularioNuevaTarea();
+            }
         })
     }
+
+    function submitFormularioNuevaTarea() {
+        const tarea = document.querySelector('#tarea').value.trim();
+
+        if(tarea === '') {
+            // Mostrar una alerta de error
+
+            return;
+        } 
+
+    }
+
 })();
