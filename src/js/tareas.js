@@ -28,5 +28,21 @@
             formulario.classList.add('active')
         }, 0)
 
+
+
+        modal.addEventListener('click', function(e) {
+            e.preventDefault();
+
+            
+
+            if(e.target.classList.contains('cerrar-modal')) {
+                const formulario = document.querySelector(".formulario");
+                formulario.classList.add('cerrar');
+
+                setTimeout(() => {
+                    modal.remove();
+                }, 350)
+            }
+        })
     }
 })();

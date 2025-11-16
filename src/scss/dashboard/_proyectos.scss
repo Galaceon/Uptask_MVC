@@ -44,20 +44,23 @@
         transition: background-color .3s ease-out;
         position: relative;
         z-index: 1;
+        border-radius: 1rem;
 
         &::before {
             content: "";
             position: absolute;
             left: 0;
-            top: 0;
-            width: 100%;
-            height: 0;
+            bottom: 0;
+            width: 0%;
+            height: 20%;
             background-color: color.scale(v.$indigo, $lightness: -10%);
-            transition: height 0.3s ease-in;
+            transition: all 0.3s ease-in;
             z-index: -1;
+            border-radius: 1rem;
         }
 
         &:hover::before {
+            width: 100%;
             height: 100%;
             z-index: -1;
         }

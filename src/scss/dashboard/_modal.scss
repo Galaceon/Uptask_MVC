@@ -8,31 +8,32 @@
     inset: 0;
 
     .formulario {
-        background-color: v.$indigo;
-        color: v.$blanco;
+        background-color: v.$blanco;
+        color: v.$negro;
         max-width: 60rem;
         padding: 2rem;
         margin: 0 auto;
         position: relative;
         top: -20rem;
         opacity: 0;
-        transition: all .4s ease-in;
-
-        display: flex;
-        flex-direction: column;
-        justify-items: center;
-        align-items: center;
+        transition: all .3s ease-in;
+        border-radius: 1rem;
 
         &.active {
             top: 40%;
             opacity: 1;
         }
+        &.cerrar {
+            top: -20rem;
+            opacity: 0;
+        }
 
         legend {
-            font-weight: bold;
-            font-size: 2rem;
-            text-transform: uppercase;
+            font-weight: 500;
+            font-size: 2.2rem;
             padding-bottom: 1.8rem;
+            text-align: center;
+            display: block;
         }
 
 
@@ -45,11 +46,7 @@
                 max-width: 15%;
                 font-size: 1.8rem;
             }
-            .tarea {
-                background-color: color.scale(v.$indigo, $lightness: -20%);
-                color: v.$blanco;
-
-            }
+            
         }
 
         .opciones {
@@ -58,13 +55,11 @@
             justify-content: space-between;
 
             .submit-nueva-tarea {
-                @include m.boton(v.$verde, v.$blanco);
-                padding: 1rem
+                @include m.boton(v.$indigo, v.$blanco);
             }
 
             .cerrar-modal {
-                @include m.boton(color.scale(v.$naranja, $lightness: -20%), v.$blanco);
-                padding: 1rem
+                @include m.boton(color.scale(v.$naranja, $lightness: -10%), v.$blanco);
             }
         }
     }
