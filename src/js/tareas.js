@@ -84,14 +84,17 @@
     async function agregarTarea(tarea) {
         // Construir la petición
         const datos = new FormData();
-        datos.append('nombre', 'Anto');
+        datos.append('nombre', tarea);
 
         try {
-            const url = 'http://localhost:3000/api/tarea';
+            const url = 'http://localhost:3000/api/tareas';
             const respuesta = await fetch(url, {
                 method: 'POST',
                 body: datos
             });
+
+            const resultado = await respuesta.json();
+            console.log(resultado);
         } catch {
             console.log('Hay un error')
         }
