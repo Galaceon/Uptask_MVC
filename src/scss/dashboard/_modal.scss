@@ -42,6 +42,11 @@
             width: 100%;
             padding: 1rem 0;
 
+            .tarea {
+                background-color: color.scale(v.$blanco, $lightness: -15%);
+                border-radius: .5rem;
+            }
+
             .tarea-label {
                 max-width: 15%;
                 font-size: 1.8rem;

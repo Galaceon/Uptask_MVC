@@ -21,7 +21,7 @@
             </form>
         `;
 
-        document.querySelector('body').appendChild(modal);
+        document.querySelector('.dashboard').appendChild(modal);
 
         setTimeout(() => {
             const formulario = document.querySelector(".formulario");
@@ -56,15 +56,32 @@
             mostrarAlerta('El nombre de la tarea es obligatorio', 'error', document.querySelector('.formulario legend'));
             return;
         }
+
+        agregarTarea(tarea);
     }
 
+    // Muestra un mensaje de alerta en la interfaz
     function mostrarAlerta(mensaje, tipo, referencia) {
+        // Previene la creación de varias alertas
+        const alertaPrevia = document.querySelector('.alerta');
+        if(alertaPrevia) {
+            alertaPrevia.remove();
+        }
+
         const alerta = document.createElement('DIV');
         alerta.classList.add('alerta', tipo);
         alerta.textContent = mensaje;
 
         referencia.parentElement.insertBefore(alerta, referencia.nextElementSibling);
         
+        // Eliminar la alerta tras 5 segundos
+        setTimeout(() => {
+            alerta.remove();
+        }, 5000)
     }
 
+    // Consultar el servidor para añadir una tarea actual
+    function agregarTarea(tarea) {
+
+    }
 })();
