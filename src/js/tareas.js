@@ -96,8 +96,10 @@
 
             const resultado = await respuesta.json();
             console.log(resultado);
-        } catch {
-            console.log('Hay un error')
+
+            mostrarAlerta(resultado.mensaje, resultado.tipo, document.querySelector('.formulario legend'));
+        } catch(error) {
+            console.log(error)
         }
     }
 

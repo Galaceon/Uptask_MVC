@@ -2,6 +2,7 @@
 
 namespace Controllers;
 
+use Model\Proyecto;
 use MVC\Router;
 
 class TareaController {
@@ -13,11 +14,20 @@ class TareaController {
     public static function crear() {
         if($_SERVER['REQUEST_METHOD'] === 'POST') {
 
-            $respuesta = [
-                'proyectoId' => $_POST['proyectoId']
-            ];
+            session_start();
 
-            echo json_encode($respuesta);
+            $proyectoId = $_POST['proyectoId'];
+
+            $proyecto = Proyecto::where('url', $proyectoId);
+
+            if(!$proyecto || $proyecto->propietarioId !== $_SESSION['id']) {
+                $respuesta = [
+                    'tipo' => 'error',
+                    'mensaje' => 'Hubo un error al agregar la tarea'
+                ];
+                echo json_encode($respuesta);
+                return;
+            }
         }
     }
 
