@@ -8,7 +8,17 @@ use MVC\Router;
 
 class TareaController {
     public static function index() {
+        session_start();
 
+        $proyectoId = $_GET['url'];
+        if(!$proyectoId) header('Location: /dashboard');
+
+        $proyecto = Proyecto::where('url', $proyectoId);
+        if(!$proyecto || $proyecto->propietarioId !== $_SESSION['id']) header('Location: /404');
+
+        $tareas = Tarea::belongsTo('proyectoId', $proyecto->id);
+        
+        echo json_encode(['tareas' => $tareas]);
     }
 
 
