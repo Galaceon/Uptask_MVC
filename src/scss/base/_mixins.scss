@@ -39,6 +39,10 @@
         background-color: color.scale($bgColor, $lightness: -20%);
         cursor: pointer;
     }
+    &.disabled {
+        background-color: color.scale($bgColor, $lightness: 40%);
+        cursor: pointer;
+    }
 }
 
 @mixin grid($columnas, $espaciado ) {
@@ -57,4 +61,22 @@
         @include tablet {
             font-size: 10rem;
         }
+}
+
+@mixin animacionAlerta($color) {
+    &::before {
+        position: absolute;
+        content: "";
+        left: 0;
+        top: 0;
+        width: 0;
+        height: 100%;
+        background-color: color.scale($color, $lightness: 60%);
+        animation: barra 2s ease-in .5s forwards;
+        z-index: -1;
+    }
+    @keyframes barra {
+        from { width: 0; }
+        to { width: 100%; }
+    }
 }

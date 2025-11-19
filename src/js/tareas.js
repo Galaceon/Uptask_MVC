@@ -53,7 +53,7 @@
 
         if(tarea === '') {
             // Mostrar una alerta de error
-            mostrarAlerta('El nombre de la tarea es obligatorio', 'error', document.querySelector('.formulario legend'));
+            mostrarAlerta('El nombre de la tarea es obligatorio', 'error', document.querySelector('.formulario legend'), true);
             return;
         }
 
@@ -61,7 +61,7 @@
     }
 
     // Muestra un mensaje de alerta en la interfaz
-    function mostrarAlerta(mensaje, tipo, referencia) {
+    function mostrarAlerta(mensaje, tipo, referencia, animacion = false) {
         // Previene la creación de varias alertas
         const alertaPrevia = document.querySelector('.alerta');
         if(alertaPrevia) {
@@ -70,6 +70,9 @@
 
         const alerta = document.createElement('DIV');
         alerta.classList.add('alerta', tipo);
+        if(animacion) {
+            alerta.classList.add(`animacion-${tipo}`)
+        }
         alerta.textContent = mensaje;
 
         referencia.parentElement.insertBefore(alerta, referencia.nextElementSibling);
@@ -77,7 +80,7 @@
         // Eliminar la alerta tras 5 segundos
         setTimeout(() => {
             alerta.remove();
-        }, 5000)
+        }, 3000)
     }
 
     // Consultar el servidor para añadir una tarea actual
@@ -95,10 +98,16 @@
             });
 
             const resultado = await respuesta.json();
-            mostrarAlerta(resultado.mensaje, resultado.tipo, document.querySelector('.formulario legend'));
+            mostrarAlerta(resultado.mensaje, resultado.tipo, document.querySelector('.formulario legend'), resultado.animacion);
 
             if(resultado.tipo === "exito") {
                 const modal = document.querySelector('.modal');
+                const submitBtn = document.querySelector('.submit-nueva-tarea');
+
+                submitBtn.disabled = true;
+                submitBtn.classList.add('disabled');
+                
+
                 setTimeout(() => {
                     modal.remove();
                 }, 3000);
@@ -106,6 +115,7 @@
         } catch(error) {
             console.log(error)
         }
+        
     }
 
     function obtenerProyecto() {

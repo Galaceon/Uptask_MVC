@@ -24,7 +24,8 @@ class TareaController {
             if(!$proyecto || $proyecto->propietarioId !== $_SESSION['id']) {
                 $respuesta = [
                     'tipo' => 'error',
-                    'mensaje' => 'Hubo un error al agregar la tarea'
+                    'mensaje' => 'Hubo un error al agregar la tarea',
+                    'animacion' => true
                 ];
                 echo json_encode($respuesta);
                 return;
@@ -37,7 +38,8 @@ class TareaController {
             $respuesta = [
                 'tipo' => 'exito',
                 'id' => $resultado['id'],
-                'mensaje' => 'Tarea Creada Correctamente'
+                'mensaje' => 'Tarea Creada Correctamente',
+                'animacion' => true
             ];
             echo json_encode($respuesta);
         }
