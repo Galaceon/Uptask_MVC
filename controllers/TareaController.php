@@ -3,6 +3,7 @@
 namespace Controllers;
 
 use Model\Proyecto;
+use Model\Tarea;
 use MVC\Router;
 
 class TareaController {
@@ -27,7 +28,18 @@ class TareaController {
                 ];
                 echo json_encode($respuesta);
                 return;
-            }
+            };
+
+            // Comportamiento esperado, instanciar y crear la tarea
+            $tarea = new Tarea($_POST);
+            $tarea->proyectoId = $proyecto->id;
+            $resultado = $tarea->guardar();
+            $respuesta = [
+                'tipo' => 'exito',
+                'id' => $resultado['id'],
+                'mensaje' => 'Tarea Creada Correctamente'
+            ];
+            echo json_encode($respuesta);
         }
     }
 
