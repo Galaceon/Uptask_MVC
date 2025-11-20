@@ -44,7 +44,7 @@
 
             const opcionesDiv = document.createElement('DIV');
             opcionesDiv.classList.add('opciones');
-            
+
             // Botones
             const btnEstadoTarea = document.createElement('BUTTON');
             btnEstadoTarea.classList.add('estado-tarea');
@@ -52,10 +52,22 @@
             btnEstadoTarea.textContent = estados[tarea.estado];
             btnEstadoTarea.dataset.estadoTarea = tarea.estado;
 
+            const btnEliminarTarea = document.createElement('BUTTON');
+            btnEliminarTarea.classList.add('eliminar-tarea');
+            btnEliminarTarea.dataset.idTarea = tarea.id;
+            btnEliminarTarea.textContent = 'Eliminar';
 
+            opcionesDiv.appendChild(btnEstadoTarea);
+            opcionesDiv.appendChild(btnEliminarTarea);
+
+            contenedorTarea.appendChild(nombreTarea);
+            contenedorTarea.appendChild(opcionesDiv);
+
+            const listadoTareas = document.querySelector(".listado-tareas");
+            listadoTareas.appendChild(contenedorTarea);
 
             console.log(tarea);
-            console.log(btnEstadoTarea);
+            console.log(contenedorTarea);
 
         })
     }
