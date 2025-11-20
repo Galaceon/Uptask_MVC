@@ -4,6 +4,9 @@
     nuevaTareaBtn.addEventListener('click', mostrarFormulario);
 
     obtenerTareas();
+    let tareas = [];
+
+
     async function obtenerTareas() {
         try {
             const id = obtenerProyecto();
@@ -11,14 +14,15 @@
             const respuesta = await fetch(url);
             const resultado = await respuesta.json();
             
-            const { tareas } = resultado;
-            mostrarTareas(tareas);
+            tareas = resultado.tareas
+            mostrarTareas();
         } catch (error) {
             console.log(error);
         }
     }
 
-    function mostrarTareas(tareas) {
+    function mostrarTareas() {
+        limpiarTareas();
         if(tareas.length === 0) {
             const contenedorTareas = document.querySelector('#listado-tareas');
 
@@ -65,10 +69,6 @@
 
             const listadoTareas = document.querySelector(".listado-tareas");
             listadoTareas.appendChild(contenedorTarea);
-
-            console.log(tarea);
-            console.log(contenedorTarea);
-
         })
     }
 
@@ -180,6 +180,17 @@
                 setTimeout(() => {
                     modal.remove();
                 }, 3000);
+
+                // Agregar el objeto de tarea al global de tareas
+                const tareaObj = {
+                    id: String(resultado.id),
+                    nombre: tarea,
+                    estado: "0",
+                    proyectoId: resultado.proyectoId
+                };
+
+                tareas = [...tareas, tareaObj];
+                mostrarTareas();
             }
         } catch(error) {
             console.log(error)
@@ -190,7 +201,15 @@
     function obtenerProyecto() {
         const proyectoParams = new URLSearchParams(window.location.search);
         const proyecto = Object.fromEntries(proyectoParams.entries());
-        return proyecto.url;
-        
+        return proyecto.url;  
+    }
+
+    function limpiarTareas() {
+        const listadoTareas = document.querySelector('#listado-tareas');
+        // listadoTareas.innerHTML = '';
+
+        while(listadoTareas.firstChild) {
+            listadoTareas.removeChild(listadoTareas.firstChild);
+        }
     }
 })();
