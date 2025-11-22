@@ -7,6 +7,8 @@ use Model\Tarea;
 use MVC\Router;
 
 class TareaController {
+    // Llamado al entrar en esta URL: /api/tareas?url=proyecto-url
+    // Retorna las tareas de un proyecto específico para que el cliente las consuma vía fetch
     public static function index() {
         session_start();
 
@@ -21,13 +23,13 @@ class TareaController {
         echo json_encode(['tareas' => $tareas]);
     }
 
-
+    // Llamado al entrar en esta URL: /api/tareas (POST)
+    // Crea una nueva tarea en un proyecto específico
     public static function crear() {
         if($_SERVER['REQUEST_METHOD'] === 'POST') {
             session_start();
 
             $proyectoId = $_POST['proyectoId'];
-
             $proyecto = Proyecto::where('url', $proyectoId);
 
             if(!$proyecto || $proyecto->propietarioId !== $_SESSION['id']) {
@@ -40,7 +42,7 @@ class TareaController {
                 return;
             };
 
-            // Comportamiento esperado, instanciar y crear la tarea
+            // Comportamiento esperado, instanciar y crear la tarea en DB
             $tarea = new Tarea($_POST);
             $tarea->proyectoId = $proyecto->id;
             $resultado = $tarea->guardar();
@@ -55,7 +57,8 @@ class TareaController {
         }
     }
 
-
+    // Llamado al entrar en esta URL: /api/tarea/actualizar
+    // Se entra a la URL al pulsar el button de tarea pendiente/completa
     public static function actualizar() {
         if($_SERVER['REQUEST_METHOD'] === 'POST') {
             // Validar que el proyecto exista
@@ -73,7 +76,8 @@ class TareaController {
             };
 
             $tarea = new Tarea($_POST);
-            $tarea->proyectoId = $proyecto->id;
+            // Cambiamos el proyectoId(ej: 362df952acc95f722137c0d6e93f1ab8) por el id real del proyecto(ej: 6)
+            $tarea->proyectoId = $proyecto->id; 
 
             $resultado = $tarea->guardar();
             if($resultado) {
