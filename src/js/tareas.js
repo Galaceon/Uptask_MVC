@@ -55,7 +55,7 @@
             btnEstadoTarea.classList.add(`${estados[tarea.estado].toLowerCase()}`);
             btnEstadoTarea.textContent = estados[tarea.estado];
             btnEstadoTarea.dataset.estadoTarea = tarea.estado;
-            btnEstadoTarea.ondblclick = function() {
+            btnEstadoTarea.onclick = function() {
                 cambiarEstadoTarea({...tarea});
             }
 
@@ -211,10 +211,10 @@
         const {estado, id, nombre, proyectoId} = tarea;
         
         const datos = new FormData();
-        datos.append('id', id)
-        datos.append('nombre', nombre)
-        datos.append('estado', estado)
-        datos.append('proyectoId', obtenerProyecto())
+        datos.append('id', id);
+        datos.append('nombre', nombre);
+        datos.append('estado', estado);
+        datos.append('proyectoId', obtenerProyecto());
 
         try {
             const url = 'http://localhost:3000/api/tarea/actualizar';
@@ -224,6 +224,18 @@
                 body: datos
             });
             const resultado = await respuesta.json();
+            
+            console.log(resultado);
+
+            if(resultado.respuesta.tipo === 'exito') {
+                mostrarAlerta(
+                    resultado.respuesta.mensaje, 
+                    resultado.respuesta.tipo, 
+                    document.querySelector('.contenedor-nueva-tarea'), 
+                    resultado.respuesta.animacion
+                );
+            }
+
         } catch (error) {
             console.log(error);
         }
@@ -232,7 +244,7 @@
     function obtenerProyecto() {
         const proyectoParams = new URLSearchParams(window.location.search);
         const proyecto = Object.fromEntries(proyectoParams.entries());
-        return proyecto.url;  
+        return proyecto.url;
     }
 
     function limpiarTareas() {
