@@ -3,26 +3,32 @@
     const nuevaTareaBtn = document.querySelector('#agregar-tarea');
     nuevaTareaBtn.addEventListener('click', mostrarFormulario);
 
-    obtenerTareas();
-    let tareas = [];
+    obtenerTareas(); // Iniciar y obtener tareas al cargar la página
+    let tareas = []; // Arreglo global de tareas al iniciar la aplicación
 
 
     async function obtenerTareas() {
         try {
-            const id = obtenerProyecto();
-            const url = `/api/tareas?url=${id}`;
-            const respuesta = await fetch(url);
-            const resultado = await respuesta.json();
-            
+            const id = obtenerProyecto(); // Obtener la URL/id del proyecto actual desde la barra del navegador
+            const url = `/api/tareas?url=${id}`; // Construir la URL para la petición al backend
+            const respuesta = await fetch(url); // Realizar la petición
+            const resultado = await respuesta.json(); // Parsear la respuesta JSON
+
+            // Asignar las tareas obtenidas al arreglo global
             tareas = resultado.tareas
-            mostrarTareas();
+
+            // Mostrar las tareas en la interfaz
+            mostrarTareas(); 
         } catch (error) {
             console.log(error);
         }
     }
 
     function mostrarTareas() {
+        // Limpiar las tareas previas(para evitar duplicados al añadir nuevas tareas)
         limpiarTareas();
+
+        // Se detiene la ejecución si no hay tareas
         if(tareas.length === 0) {
             const contenedorTareas = document.querySelector('#listado-tareas');
 
@@ -34,11 +40,16 @@
             return;
         }
         
+        // Diccionario para estados de tareas
         const estados = {
             0: 'Pendiente',
             1: 'Completa'
         }
+
+        // Scripting de las tareas
         tareas.forEach(tarea => {
+            // Cada tarea: li > p + div.opciones > button.estado + button.eliminar
+
             const contenedorTarea = document.createElement('LI');
             contenedorTarea.dataset.tareaId = tarea.id;
             contenedorTarea.classList.add('tarea');
@@ -55,8 +66,8 @@
             btnEstadoTarea.classList.add(`${estados[tarea.estado].toLowerCase()}`);
             btnEstadoTarea.textContent = estados[tarea.estado];
             btnEstadoTarea.dataset.estadoTarea = tarea.estado;
-            btnEstadoTarea.onclick = function() {
-                cambiarEstadoTarea({...tarea});
+            btnEstadoTarea.onclick = function() { 
+                cambiarEstadoTarea({...tarea}); // Pasar una copia del objeto tarea para evitar mutaciones directas
             }
 
             const btnEliminarTarea = document.createElement('BUTTON');
@@ -79,7 +90,7 @@
     function mostrarFormulario() {
         const modal = document.createElement('DIV');
         modal.classList.add('modal');
-        modal.innerHTML = `
+        modal.innerHTML =  `
             <form class="formulario nueva-tarea">
                 <legend>Añade una nueva tarea</legend>
                 <div class="campo">
@@ -91,20 +102,23 @@
                     <button type="button" class="cerrar-modal">Cancelar</button>
                 </div>
             </form>
-        `;
+        `; // Template literal del contenido del modal
 
+        // Agregar el modal al DOM
         document.querySelector('.dashboard').appendChild(modal);
 
+        // Animar la aparición del modal
         setTimeout(() => {
             const formulario = document.querySelector(".formulario");
             formulario.classList.add('active')
         }, 0)
 
-
-
+        // Escuchar los clics en el modal
         modal.addEventListener('click', function(e) {
+            // Prevenir el comportamiento por defecto por el botón submit
             e.preventDefault();
 
+            // Buscar si se dio click en el botón con la clase cerrar-modal para cerrar el modal
             if(e.target.classList.contains('cerrar-modal')) {
                 const formulario = document.querySelector(".formulario");
                 formulario.classList.add('cerrar');
@@ -114,13 +128,16 @@
                 }, 350)
             }
 
+            // Buscar si se dio click en el botón submit para agregar la nueva tarea
             if(e.target.classList.contains('submit-nueva-tarea')) {
                 submitFormularioNuevaTarea();
             }
         })
     }
 
+    // Función para manejar el envío del formulario de nueva tarea
     function submitFormularioNuevaTarea() {
+        // .trim por si el usuario ingresa muchos espacios en blanco
         const tarea = document.querySelector('#tarea').value.trim();
 
         if(tarea === '') {
@@ -129,6 +146,7 @@
             return;
         }
 
+        // Si pasa la validación, se agrega la tarea
         agregarTarea(tarea);
     }
 
@@ -142,14 +160,15 @@
 
         const alerta = document.createElement('DIV');
         alerta.classList.add('alerta', tipo);
-        if(animacion) {
-            alerta.classList.add(`animacion-${tipo}`)
+        if(animacion) { // Si se requiere animación, agrega clase de animación según el tipo(éxito o error)
+            alerta.classList.add(`animacion-${tipo}`) 
         }
         alerta.textContent = mensaje;
 
+        // Colocar aleta debajo de la referencia
         referencia.parentElement.insertBefore(alerta, referencia.nextElementSibling);
         
-        // Eliminar la alerta tras 5 segundos
+        // Eliminar la alerta tras 3 segundos
         setTimeout(() => {
             alerta.remove();
         }, 3000)
@@ -157,7 +176,7 @@
 
     // Consultar el servidor para añadir una tarea actual
     async function agregarTarea(tarea) {
-        // Construir la petición
+        // Construir la petición (mandamos nombre de la tarea y el url/id del proyecto)
         const datos = new FormData();
         datos.append('nombre', tarea);
         datos.append('proyectoId', obtenerProyecto());
@@ -174,25 +193,25 @@
 
             if(resultado.tipo === "exito") {
                 const modal = document.querySelector('.modal');
-                const submitBtn = document.querySelector('.submit-nueva-tarea');
 
+                // Deshabilitar el botón de submit para evitar múltiples envíos de la misma tarea
+                const submitBtn = document.querySelector('.submit-nueva-tarea');
                 submitBtn.disabled = true;
                 submitBtn.classList.add('disabled');
                 
-
+                // Eliminar el modal tras 3 segundos
                 setTimeout(() => {
                     modal.remove();
                 }, 3000);
 
-                // Agregar el objeto de tarea al global de tareas
+                // Agregar el objeto de tarea al global de tareas(para mostrarlo en la interfaz sin recargar la página)
                 const tareaObj = {
                     id: String(resultado.id),
                     nombre: tarea,
                     estado: "0",
                     proyectoId: resultado.proyectoId
                 };
-
-                tareas = [...tareas, tareaObj];
+                tareas = [...tareas, tareaObj]; // agregar la nueva tarea al arreglo global de tareas sin mutarlo
                 mostrarTareas();
             }
         } catch(error) {
@@ -201,12 +220,14 @@
     }
 
     function cambiarEstadoTarea(tarea) {
-        const nuevoEstado = tarea.estado === "1" ? "0" : "1";
+        const nuevoEstado = tarea.estado === "1" ? "0" : "1"; // Si está completa(1), cambiar a pendiente(0) y viceversa
         tarea.estado = nuevoEstado;
         actualizarTarea(tarea);
     }
 
+    // Actualizar una tarea en el servidor
     async function actualizarTarea(tarea) {
+        // Detructuring del objeto tarea
         const {estado, id, nombre, proyectoId} = tarea;
         
         const datos = new FormData();
@@ -225,6 +246,7 @@
             const resultado = await respuesta.json();
 
             if(resultado.respuesta.tipo === 'exito') {
+                // alertar de éxito al cambiar el estado de una tarea
                 mostrarAlerta(
                     resultado.respuesta.mensaje, 
                     resultado.respuesta.tipo, 
@@ -232,11 +254,11 @@
                     resultado.respuesta.animacion
                 );
 
+                // Crear un nuevo array de tareas(para no mutar el original) con el estado actualizado de la tarea modificada
                 tareas = tareas.map(tareaMemoria => {
                     if(tareaMemoria.id === id) {
                         tareaMemoria.estado = estado;
                     }
-
                     return tareaMemoria;
                 });
 
@@ -248,17 +270,23 @@
         }
     }
 
+    // Obtener el ID del proyecto actual mediante URL
     function obtenerProyecto() {
+        // URLSearchParams nos permite acceder a los query params (parámetros de la URL)
         const proyectoParams = new URLSearchParams(window.location.search);
+
+        // fromEntries convierte los parámetros en un objeto y accedemos a la propiedad url
         const proyecto = Object.fromEntries(proyectoParams.entries());
         return proyecto.url;
     }
 
+    // Limpiar las tareas previas del DOM
     function limpiarTareas() {
         const listadoTareas = document.querySelector('#listado-tareas');
-        // listadoTareas.innerHTML = '';
+        // listadoTareas.innerHTML = ''; menos codigo pero más lento en cuanto a performance
 
-        while(listadoTareas.firstChild) {
+        // mas codigo pero más rápido en performance
+        while(listadoTareas.firstChild) { // Mientras haya un primer hijo, lo elimina
             listadoTareas.removeChild(listadoTareas.firstChild);
         }
     }
