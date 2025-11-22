@@ -198,7 +198,6 @@
         } catch(error) {
             console.log(error)
         }
-        
     }
 
     function cambiarEstadoTarea(tarea) {
@@ -224,8 +223,6 @@
                 body: datos
             });
             const resultado = await respuesta.json();
-            
-            console.log(resultado);
 
             if(resultado.respuesta.tipo === 'exito') {
                 mostrarAlerta(
@@ -234,6 +231,16 @@
                     document.querySelector('.contenedor-nueva-tarea'), 
                     resultado.respuesta.animacion
                 );
+
+                tareas = tareas.map(tareaMemoria => {
+                    if(tareaMemoria.id === id) {
+                        tareaMemoria.estado = estado;
+                    }
+
+                    return tareaMemoria;
+                });
+
+                mostrarTareas();
             }
 
         } catch (error) {
