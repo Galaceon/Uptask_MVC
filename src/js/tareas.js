@@ -74,6 +74,9 @@
             btnEliminarTarea.classList.add('eliminar-tarea');
             btnEliminarTarea.dataset.idTarea = tarea.id;
             btnEliminarTarea.textContent = 'Eliminar';
+            btnEliminarTarea.onclick = function() {
+                confirmarEliminarTarea({...tarea}); // Pasar una copia del objeto tarea para evitar mutaciones directas
+            }
 
             opcionesDiv.appendChild(btnEstadoTarea);
             opcionesDiv.appendChild(btnEliminarTarea);
@@ -269,6 +272,36 @@
             console.log(error);
         }
     }
+
+    function confirmarEliminarTarea(tarea) {
+        Swal.fire({
+            title: `¿Quieres eliminar la tarea ${tarea.nombre}?`,
+            width: '40rem',
+            showCancelButton: true,
+            confirmButtonText: "Si",
+            cancelButtonText: "No",
+            customClass: {
+                popup: 'swal-grande',
+                confirmButton: 'btn-grande',
+                cancelButton: 'btn-grande'
+            }
+        }).then((result) => {
+            if (result.isConfirmed) {
+                eliminarTarea(tarea);
+            }
+        });
+    }
+
+    async function eliminarTarea(tarea) {
+        const datos = new FormData();
+
+        try {
+
+        } catch(error) {
+            console.log(error);
+        }
+    }
+        
 
     // Obtener el ID del proyecto actual mediante URL
     function obtenerProyecto() {
