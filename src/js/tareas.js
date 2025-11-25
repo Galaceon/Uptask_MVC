@@ -1,14 +1,32 @@
 (function() {
+    obtenerTareas(); // Iniciar y obtener tareas al cargar la página
+    let tareas = []; // Arreglo global de tareas al iniciar la aplicación
+    let filtradas = [];
+
     // Boton para mostrar el modal de agregar tarea
     const nuevaTareaBtn = document.querySelector('#agregar-tarea');
     nuevaTareaBtn.addEventListener('click', function() {
         mostrarFormulario();
     });
 
+    // Filtros de búsuqueda
+    const filtros = document.querySelectorAll('#filtros input[type="radio"]')
+    filtros.forEach(radio => {
+        radio.addEventListener('input', filtrarTareas)
+    })
 
-    obtenerTareas(); // Iniciar y obtener tareas al cargar la página
-    let tareas = []; // Arreglo global de tareas al iniciar la aplicación
+    function filtrarTareas(e) {
+        const filtro = e.target.value;
 
+        if(filtro !== '') {
+            filtradas = tareas.filter(tarea => tarea.estado === filtro)
+            console.log(filtradas);
+        } else {
+            filtradas = [];
+        }
+
+        mostrarTareas();
+    }
 
     async function obtenerTareas() {
         try {
@@ -32,8 +50,10 @@
         // Limpiar las tareas previas(para evitar duplicados al añadir nuevas tareas)
         limpiarTareas();
 
+        const arrayTareas = filtradas.length ? filtradas : tareas;
+
         // Se detiene la ejecución si no hay tareas
-        if(tareas.length === 0) {
+        if(arrayTareas.length === 0) {
             const contenedorTareas = document.querySelector('#listado-tareas');
 
             const textoNoTareas = document.createElement('LI');
@@ -51,7 +71,7 @@
         }
 
         // Scripting de las tareas
-        tareas.forEach(tarea => {
+        arrayTareas.forEach(tarea => {
             // Cada tarea: li > p + div.opciones > button.estado + button.eliminar
 
             const contenedorTarea = document.createElement('LI');
