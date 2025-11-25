@@ -261,17 +261,27 @@
 
             if(resultado.respuesta.tipo === 'exito') {
                 // alertar de éxito al cambiar el estado de una tarea
-                mostrarAlerta(
-                    resultado.respuesta.mensaje, 
-                    resultado.respuesta.tipo, 
-                    document.querySelector('.contenedor-nueva-tarea'), 
-                    resultado.respuesta.animacion
-                );
+                Swal.fire({
+                    text: resultado.respuesta.mensaje,
+                    icon: 'success',
+                    width: '42rem',
+                    customClass: {
+                        popup: 'swal-grande',
+                        confirmButton: 'btn-grande',
+                    }
+                });
+
+                const modal = document.querySelector('.modal');
+                if(modal) {
+                    modal.remove();
+                }
+                
 
                 // Crear un nuevo array de tareas(para no mutar el original) con el estado actualizado de la tarea modificada
                 tareas = tareas.map(tareaMemoria => {
                     if(tareaMemoria.id === id) {
                         tareaMemoria.estado = estado;
+                        tareaMemoria.nombre = nombre;
                     }
                     return tareaMemoria;
                 });
