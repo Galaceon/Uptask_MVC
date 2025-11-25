@@ -5,6 +5,7 @@
         mostrarFormulario();
     });
 
+
     obtenerTareas(); // Iniciar y obtener tareas al cargar la página
     let tareas = []; // Arreglo global de tareas al iniciar la aplicación
 
@@ -25,6 +26,7 @@
             console.log(error);
         }
     }
+
 
     function mostrarTareas() {
         // Limpiar las tareas previas(para evitar duplicados al añadir nuevas tareas)
@@ -59,7 +61,7 @@
             const nombreTarea = document.createElement('P');
             nombreTarea.textContent = tarea.nombre;
             nombreTarea.onclick = function() {
-                mostrarFormulario(editar = true, tarea)
+                mostrarFormulario(editar = true, {...tarea})
             }
 
             const opcionesDiv = document.createElement('DIV');
@@ -93,6 +95,7 @@
             listadoTareas.appendChild(contenedorTarea);
         })
     }
+
 
     // Función para mostrar el formulario modal
     function mostrarFormulario(editar = false, tarea = {}) {
@@ -138,25 +141,25 @@
 
             // Buscar si se dio click en el botón submit para agregar la nueva tarea
             if(e.target.classList.contains('submit-nueva-tarea')) {
-                submitFormularioNuevaTarea();
+                // .trim por si el usuario ingresa muchos espacios en blanco
+                const nombreTarea = document.querySelector('#tarea').value.trim();
+
+                if(nombreTarea === '') {
+                    // Mostrar una alerta de error
+                    mostrarAlerta('El nombre de la tarea es obligatorio', 'error', document.querySelector('.formulario legend'), true);
+                    return;
+                }
+
+                if(editar) {
+                    tarea.nombre = nombreTarea;
+                    actualizarTarea(tarea);
+                } else {
+                    agregarTarea(nombreTarea);
+                }
             }
         })
     }
 
-    // Función para manejar el envío del formulario de nueva tarea
-    function submitFormularioNuevaTarea() {
-        // .trim por si el usuario ingresa muchos espacios en blanco
-        const tarea = document.querySelector('#tarea').value.trim();
-
-        if(tarea === '') {
-            // Mostrar una alerta de error
-            mostrarAlerta('El nombre de la tarea es obligatorio', 'error', document.querySelector('.formulario legend'), true);
-            return;
-        }
-
-        // Si pasa la validación, se agrega la tarea
-        agregarTarea(tarea);
-    }
 
     // Muestra un mensaje de alerta en la interfaz
     function mostrarAlerta(mensaje, tipo, referencia, animacion = false) {
@@ -181,6 +184,7 @@
             alerta.remove();
         }, 3000)
     }
+
 
     // Consultar el servidor para añadir una tarea actual
     async function agregarTarea(tarea) {
@@ -227,11 +231,13 @@
         }
     }
 
+
     function cambiarEstadoTarea(tarea) {
         const nuevoEstado = tarea.estado === "1" ? "0" : "1"; // Si está completa(1), cambiar a pendiente(0) y viceversa
         tarea.estado = nuevoEstado;
         actualizarTarea(tarea);
     }
+
 
     // Actualizar una tarea en el servidor
     async function actualizarTarea(tarea) {
@@ -278,6 +284,7 @@
         }
     }
 
+
     function confirmarEliminarTarea(tarea) {
         Swal.fire({
             title: `¿Quieres eliminar la tarea ${tarea.nombre}?`,
@@ -296,6 +303,7 @@
             }
         });
     }
+
 
     async function eliminarTarea(tarea) {
         // Detructuring del objeto tarea
