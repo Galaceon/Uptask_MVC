@@ -50,6 +50,7 @@
         // Limpiar las tareas previas(para evitar duplicados al añadir nuevas tareas)
         limpiarTareas();
         totalPendientes();
+        totalCompletadas();
 
         const arrayTareas = filtradas.length ? filtradas : tareas;
 
@@ -128,7 +129,7 @@
         }
     }
 
-    function totalPendientes() {
+    function totalCompletadas() {
         const totalCompletas = tareas.filter(tarea => tarea.estado === "1");
         const completadasRadio = document.querySelector('#completadas');
 

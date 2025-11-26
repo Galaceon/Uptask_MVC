@@ -1,5 +1,5 @@
 <aside class="sidebar">
-    <h2>UpTask</h2>
+    <h2><a href="/dashboard">UpTask</a></h2>
 
     <nav class="sidebar-nav">
         <a class="<?php echo ($titulo === 'Proyectos') ? 'activo' : '' ?>" href="/dashboard">Proyectos</a>
