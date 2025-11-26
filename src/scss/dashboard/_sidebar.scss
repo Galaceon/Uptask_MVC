@@ -5,6 +5,12 @@
 
 
 .sidebar {
+    display: none;
+
+    @include m.tablet {
+        display: block;
+    }
+
     background-color: v.$indigo;
     padding: 2rem;
 
