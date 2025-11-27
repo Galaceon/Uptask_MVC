@@ -23,6 +23,26 @@
         }
     }
 
+            .title-link {
+            position: relative;
+            color: v.$blanco;
+
+            &::before {
+                content: "";
+                position: absolute;
+                bottom: -2px;
+                left: 0;
+                width: 0;
+                height: 2px;
+                background-color: v.$blanco;
+                transition: width 0.3s ease;
+            }
+            &:hover::before,
+            &.activo::before {
+                width: 100%;
+            }
+        }
+
     .formulario {
         input:not([type="submit"]) {
             background-color: v.$blanco;

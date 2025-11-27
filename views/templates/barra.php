@@ -1,5 +1,5 @@
 <div class="barra-mobile">
-    <h1>UpTask</h1>
+    <h1><a class="title-link" href="/dashboard">UpTask</a></h1>
     <div class="menu">
         <img id="mobile-menu" src="build/img/menu.svg" alt="imagen menu">
     </div>

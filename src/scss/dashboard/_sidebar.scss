@@ -8,7 +8,7 @@
     background-color: v.$indigo;
     opacity: 0;
     height: 0;
-    transition: all .3s ease-out;
+    transition: opacity .3s ease-out;
     overflow: hidden;
     display: block;
     
@@ -25,6 +25,9 @@
             display: none;
         }
     }
+    &.ocultar {
+        opacity: 0;
+    }
     @include m.tablet {
         padding: 2rem;
         display: block;
@@ -34,31 +37,20 @@
         background-color: v.$indigo;
     }
 
-    
-
-    h2 {
-        color: v.$blanco;
-        margin: 0;
-        text-align: center;
-    }
-
-    a {
-        position: relative;
-        color: v.$blanco;
-
-        &::before {
-            content: "";
-            position: absolute;
-            bottom: -2px;
-            left: 0;
-            width: 0;
-            height: 2px;
-            background-color: v.$blanco;
-            transition: width 0.3s ease;
+    .contenedor-sidebar {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        h2 {
+            color: v.$blanco;
+            margin: 0;
+            text-align: center;
         }
-        &:hover::before,
-        &.activo::before {
-            width: 100%;
+        .cerrar-menu {
+            width: 2rem;
+            &:hover {
+                cursor: pointer;
+            }
         }
     }
 
