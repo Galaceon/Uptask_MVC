@@ -3,6 +3,7 @@
 namespace Controllers;
 
 use Model\Proyecto;
+use Model\Usuario;
 use MVC\Router;
 
 class DashboardController {
@@ -86,10 +87,15 @@ class DashboardController {
         // Iniciar sesión y validar el usuario
         session_start();
         isAuth();
+        $alertas = [];
+
+        $usuario = Usuario::find($_SESSION['id']);
 
 
         $router->render('dashboard/perfil', [
-            'titulo' => 'Perfil'
+            'titulo' => 'Perfil',
+            'usuario' => $usuario,
+            'alertas' => $alertas
         ]);
     }
 }
