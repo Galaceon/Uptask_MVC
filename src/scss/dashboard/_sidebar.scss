@@ -51,7 +51,11 @@
             &:hover {
                 cursor: pointer;
             }
+            @include m.tablet {
+                display: none;
+            }
         }
+        
     }
 
     .sidebar-nav {
@@ -61,27 +65,18 @@
             position: relative;
             color: v.$blanco;
             display: block;
-            margin-bottom: 1.5rem;
+            margin-bottom: 2.5rem;
             padding: 0.7rem 0.7rem 0.7rem 1.5rem;
-            font-size: 1.6rem;
+            font-size: 2.2rem;
             text-transform: uppercase;
+            text-align: center;
 
             &:hover,
             &.activo {
               background-color: color.scale(v.$indigo, $lightness: -20%);
               transition: background-color .3s ease;
             }
-
-            &::before {
-                 content: "";
-                 position: absolute;
-                 left: 0;
-                 bottom: 0;
-                 width: 0;
-                 height: 100%;
-                 background-color: v.$blanco;
-                 transition: width 0.3s ease;
-            }
+            
 
             &::after {
                  content: "";
@@ -94,15 +89,43 @@
                  transition: width 0.3s ease;
             }
 
-            &:hover::before,
-            &.activo::before {
-              width: .7rem;
-            }
-
             &:hover::after,
             &.activo::after {
               width: 100%;
             }
+
+            @include m.tablet {
+                font-size: 1.6rem;
+                margin-bottom: 1.5rem;
+                text-align: left;
+
+                &::before {
+                    content: "";
+                    position: absolute;
+                    left: 0;
+                    bottom: 0;
+                    width: 0;
+                    height: 100%;
+                    background-color: v.$blanco;
+                    transition: width 0.3s ease;
+                }
+
+                &:hover::before,
+                &.activo::before {
+                  width: .7rem;
+                }
+            }
+        }
+    }
+
+    .cerrar-sesion-mobile {
+        margin-top: 10rem;
+
+        .cerrar-sesion {
+            @include m.boton(v.$indigo, v.$blanco);
+        }
+        @include m.tablet {
+            display: none;
         }
     }
 }
