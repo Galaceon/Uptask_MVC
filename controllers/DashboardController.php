@@ -97,11 +97,16 @@ class DashboardController {
             $alertas = $usuario->validar_perfil();
 
             if(empty($alertas)) {
-                // GUardar el usuario
-            }
+                // Guardar el usuario
+                $usuario->guardar();
 
+                Usuario::setAlerta('exito', 'Guardado correctamente');
+                $alertas = $usuario->getAlertas();
+
+                // Asignar el nombre nuevo a la barra
+                $_SESSION['nombre'] = $usuario->nombre;
+            } 
         }
-
 
         $router->render('dashboard/perfil', [
             'titulo' => 'Perfil',
