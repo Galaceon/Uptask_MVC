@@ -124,10 +124,33 @@ class DashboardController {
         ]);
     }
 
+
     public static function cambiar_password(Router $router) {
         session_start();
         isAuth();
         $alertas = [];
+
+        if($_SERVER['REQUEST_METHOD'] === 'POST') {
+            $usuario = Usuario::find($_SESSION['id']);
+
+            // Sincronizar con los datos de Usuario
+            $usuario->sincronizar($_POST);
+
+            $alertas = $usuario->nuevo_password();
+
+            if(empty($alertas)) {
+                $resultado = $usuario->comprobar_password();
+
+                if($resultado) {
+                    // Asignar el nuevo Password
+
+                } else {
+                    Usuario::setAlerta('error', 'Password Actual Incorrecto');
+                    $alertas = $usuario->getAlertas();
+                }
+            }
+
+        }
 
         $router->render('dashboard/cambiar-password', [
             'titulo' => 'Cambiar Contraseña',
