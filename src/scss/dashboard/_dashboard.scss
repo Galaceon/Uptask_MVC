@@ -1,5 +1,6 @@
 @use 'base/variables' as v;
 @use 'base/mixins' as m;
+@use 'sass:color';
 
 .dashboard {
     background-color: v.$grisClaro;
@@ -54,6 +55,13 @@
             font-weight: bold;
             font-size: 1.4rem;
 
+        }
+    }
+
+    .enlace {
+        color: v.$indigo;
+        &:hover {
+            color: color.scale(v.$indigo, $lightness: -40%);  
         }
     }
 }
