@@ -12,7 +12,10 @@
 
     .principal {
         flex: 1;
+
         overflow: scroll;
+        overflow-y: auto;
+        overflow-x: hidden;
     }
 
     .contenido {
