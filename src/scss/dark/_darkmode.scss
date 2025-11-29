@@ -12,27 +12,60 @@
     .formulario label,
     .login .acciones a,
     .crear .acciones a,
-    .olvide .acciones a {
+    .olvide .acciones a,
+    .reestablecer .acciones a {
         color: v.$blanco;
     }
 
     .descripcion-pagina,
-    .formulario .campo input,
     .nombre-pagina {
         color: color.scale(v.$grisClaro, $lightness: -10%);
     }
 
     .formulario .campo input {
         background-color: color.scale($grisOscuro, $lightness: 15%);
+        color: v.$blanco;
+
+        &::placeholder {
+            color: color.scale(v.$grisClaro, $lightness: -20%);
+        }
     }
 
     .alerta.error {
         background-color: v.$blanco;
     }
 
-    .barra-mobile {
+    .barra-mobile,
+    .barra {
         background-color: color.scale($grisOscuro, $lightness: -20%);
+        .cerrar-sesion {
+            @include m.boton(color.scale(v.$naranja, $lightness: -10%), v.$blanco);
+            padding: 1rem 2rem;
+            font-size: 1.4rem;
+            
+        }
     }
+
+    .barra p {
+        color: v.$grisClaro;
+
+        span {
+            color: v.$naranja;
+        }
+    }
+
+    .sidebar {
+        @include m.tablet {
+            background-color: color.scale($grisOscuro, $lightness: 5%);
+        }
+
+        .sidebar-nav a:hover,
+        .sidebar-nav a.activo {
+            background-color: color.scale(v.$naranja, $lightness: -10%);
+        }
+    }
+
+
 
     .filtros {
         background-color: color.scale($grisOscuro, $lightness: 10%);
@@ -41,12 +74,22 @@
             color: v.$blanco;
         }
         input[type="radio"] {
-            accent-color: $grisOscuro;
+            accent-color: v.$naranja;
         }
     }
 
     .dashboard {
         background-color: $grisOscuro;
+
+        
+
+        .formulario .campo input {
+            color: v.$blanco;
+
+            &::placeholder {
+                color: color.scale(v.$grisClaro, $lightness: -20%);
+            }
+        }
 
         .enlace {
             color: v.$grisClaro;
@@ -75,5 +118,27 @@
     }
     .dashboard .formulario input:not([type=submit]) {
         background-color: color.scale($grisOscuro, $lightness: 15%);
+    }
+
+    .modal .formulario {
+        background-color: $grisOscuro;
+
+        .campo .tarea {
+            background-color: color.scale($grisOscuro, $lightness: 15%);
+            color: v.$blanco;
+
+            &::placeholder {
+                color: color.scale(v.$grisClaro, $lightness: -15%);
+            }
+        }
+
+        legend {
+            color: v.$grisClaro;
+        }
+    }
+
+    .swal-dark {
+        color: v.$blanco;
+        background-color: $grisOscuro;
     }
 }

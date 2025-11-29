@@ -310,7 +310,7 @@
                     icon: 'success',
                     width: '42rem',
                     customClass: {
-                        popup: 'swal-grande',
+                        popup: 'swal-grande swal-dark',
                         confirmButton: 'btn-grande',
                     }
                 });
