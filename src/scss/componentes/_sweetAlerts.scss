@@ -1,3 +1,6 @@
+@use 'base/variables' as v;
+@use 'sass:color';
+
 .swal-grande {
     font-size: 1.4rem !important; /* Agranda el contenido */
     border-radius: .5rem;
@@ -9,4 +12,11 @@
     font-size: 1.4rem !important;
     font-weight: 700;
     border-radius: .5rem !important;
+}
+
+.cancel-button {
+    background-color: v.$naranja;
+    &:hover {
+        background-color: color.scale(v.$naranja, $lightness: -10%);
+    }
 }

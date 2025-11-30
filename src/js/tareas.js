@@ -3,30 +3,34 @@
     let tareas = []; // Arreglo global de tareas al iniciar la aplicación
     let filtradas = [];
 
+
     // Boton para mostrar el modal de agregar tarea
     const nuevaTareaBtn = document.querySelector('#agregar-tarea');
     nuevaTareaBtn.addEventListener('click', function() {
         mostrarFormulario();
     });
 
-    // Filtros de búsuqueda
+
+    // Filtros de búsuqueda (por completada/pendiente)
     const filtros = document.querySelectorAll('#filtros input[type="radio"]')
     filtros.forEach(radio => {
         radio.addEventListener('input', filtrarTareas)
     })
 
-    function filtrarTareas(e) {
-        const filtro = e.target.value;
 
-        if(filtro !== '') {
-            filtradas = tareas.filter(tarea => tarea.estado === filtro)
-            console.log(filtradas);
+    // FIltrar tareas según su estado
+    function filtrarTareas(e) {
+        const filtro = e.target.value; //Todas: '' - Completadas: 1 - Pendientes: 0
+
+        // Al pulsar "Todas", se muestra el arreglo de tareas, no el de filtradas
+        if(filtro !== '') { 
+            filtradas = tareas.filter(tarea => tarea.estado === filtro);
         } else {
             filtradas = [];
         }
-
-        mostrarTareas();
+        mostrarTareas(); // Filtrara y mostrará las tareas según el filtro seleccionado
     }
+
 
     async function obtenerTareas() {
         try {
@@ -47,10 +51,9 @@
 
 
     function mostrarTareas() {
-        // Limpiar las tareas previas(para evitar duplicados al añadir nuevas tareas)
-        limpiarTareas();
-        totalPendientes();
-        totalCompletadas();
+        limpiarTareas(); // Limpiar las tareas previas(para evitar duplicados al añadir nuevas tareas)
+        totalPendientes(); // SI no hay pendientes desactiva el radio button de pendientes
+        totalCompletadas(); // SI no hay completadas desactiva el radio button de completadas
 
         const arrayTareas = filtradas.length ? filtradas : tareas;
 
@@ -92,7 +95,7 @@
             // Botones
             const btnEstadoTarea = document.createElement('BUTTON');
             btnEstadoTarea.classList.add('estado-tarea');
-            btnEstadoTarea.classList.add(`${estados[tarea.estado].toLowerCase()}`);
+            btnEstadoTarea.classList.add(`${estados[tarea.estado].toLowerCase()}`); // Estilos para el boton gracias al diccionario de "estados"
             btnEstadoTarea.textContent = estados[tarea.estado];
             btnEstadoTarea.dataset.estadoTarea = tarea.estado;
             btnEstadoTarea.onclick = function() { 
@@ -118,6 +121,7 @@
         })
     }
 
+    // Si no hay tareas pendientes, deshabilitar el radio button de pendientes
     function totalPendientes() {
         const totalPendientes = tareas.filter(tarea => tarea.estado === "0");
         const pendientesRadio = document.querySelector('#pendientes');
@@ -129,6 +133,8 @@
         }
     }
 
+
+    // Si no hay tareas completadas, deshabilitar el radio button de completadas
     function totalCompletadas() {
         const totalCompletas = tareas.filter(tarea => tarea.estado === "1");
         const completadasRadio = document.querySelector('#completadas');
@@ -286,7 +292,7 @@
     // Actualizar una tarea en el servidor
     async function actualizarTarea(tarea) {
         // Detructuring del objeto tarea
-        const {estado, id, nombre, proyectoId} = tarea;
+        const {estado, id, nombre} = tarea;
         
         const datos = new FormData();
         datos.append('id', id);
@@ -320,7 +326,6 @@
                     modal.remove();
                 }
                 
-
                 // Crear un nuevo array de tareas(para no mutar el original) con el estado actualizado de la tarea modificada
                 tareas = tareas.map(tareaMemoria => {
                     if(tareaMemoria.id === id) {
@@ -332,13 +337,13 @@
 
                 mostrarTareas();
             }
-
         } catch (error) {
             console.log(error);
         }
     }
 
 
+    // Popup de confirmación antes de eliminar una tarea
     function confirmarEliminarTarea(tarea) {
         Swal.fire({
             title: `¿Quieres eliminar la tarea ${tarea.nombre}?`,
@@ -347,9 +352,9 @@
             confirmButtonText: "Si",
             cancelButtonText: "No",
             customClass: {
-                popup: 'swal-grande',
+                popup: 'swal-grande swal-dark',
                 confirmButton: 'btn-grande',
-                cancelButton: 'btn-grande'
+                cancelButton: 'btn-grande cancel-button'
             }
         }).then((result) => {
             if (result.isConfirmed) {
@@ -359,9 +364,10 @@
     }
 
 
+    // Eliminar una tarea del servidor
     async function eliminarTarea(tarea) {
         // Detructuring del objeto tarea
-        const {estado, id, nombre, proyectoId} = tarea;
+        const {estado, id, nombre} = tarea;
         
         const datos = new FormData();
         datos.append('id', id);
@@ -409,6 +415,7 @@
         const proyecto = Object.fromEntries(proyectoParams.entries());
         return proyecto.url;
     }
+
 
     // Limpiar las tareas previas del DOM
     function limpiarTareas() {
